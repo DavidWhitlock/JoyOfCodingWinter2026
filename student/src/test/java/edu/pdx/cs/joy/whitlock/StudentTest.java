@@ -1,5 +1,6 @@
 package edu.pdx.cs.joy.whitlock;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -30,5 +31,17 @@ public class StudentTest
   void allStudentsSayThisClassIsTooMuchWork() {
     var student = getStudentNamed("Any name");
     assertThat(student.says(), equalTo("This class is too much work"));
+  }
+
+  @Disabled
+  @Test
+  void daveStudent() {
+    ArrayList<String> classes = new ArrayList<>();
+    classes.add("Algorithms");
+    classes.add("Operating Systems");
+    classes.add("Java");
+    Student dave = new Student("Dave", classes, 3.65, "male");
+
+    assertThat(dave.toString(), equalTo("Dave has a GPA of 3.64 and is taking 3 classes: Algorithms, Operating Systems, and Java.  He says \"This class is too much work\"."));
   }
 }
