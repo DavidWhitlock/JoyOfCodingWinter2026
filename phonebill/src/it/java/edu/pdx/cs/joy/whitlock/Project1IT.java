@@ -27,4 +27,10 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing phone bill information"));
   }
 
+  @Test
+  void commandLineArgumentsAreEchoedToStandardOut() {
+    String firstArgument = "Hello";
+    MainMethodResult result = invokeMain(firstArgument);
+    assertThat(result.getTextWrittenToStandardOut(), containsString(firstArgument));
+  }
 }
