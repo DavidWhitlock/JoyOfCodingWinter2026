@@ -51,6 +51,13 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    System.err.println("Missing required student information!!");
+    if (args.length == 0) {
+      System.err.println("Missing required student information!!");
+      return;
+    }
+
+    String name = args[0];
+    Student student = new Student(name, new ArrayList<>(), 0.0, "other");
+    System.out.println(student);
   }
 }
