@@ -38,4 +38,21 @@ class StudentIT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), equalTo(""));
     assertThat(result.getTextWrittenToStandardOut(), containsString(name));
   }
+
+  @Test
+  void studentGPAIsWrittenToStandardOut() {
+    String gpa = "3.4";
+    InvokeMainTestCase.MainMethodResult result =
+      invokeMain(Student.class, "Any name", gpa);
+    assertThat(result.getTextWrittenToStandardError(), equalTo(""));
+    assertThat(result.getTextWrittenToStandardOut(), containsString(" has a GPA of " + gpa));
+  }
+
+  @Test
+  void invalidGPAIssuesErrorToStandardError() {
+    String invalidGPA = "NotAGPA";
+    InvokeMainTestCase.MainMethodResult result =
+      invokeMain(Student.class, "Any name", invalidGPA);
+    assertThat(result.getTextWrittenToStandardError(), containsString("Invalid GPA: \"" + invalidGPA + "\""));
+  }
 }
