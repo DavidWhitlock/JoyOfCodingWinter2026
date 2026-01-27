@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Phone Bill Project,edu.pdx.cs.joy.whitlock,PhoneBillDAO,54,70,6,4,15,22,5,5,1,4
+Phone Bill Project,edu.pdx.cs.joy.whitlock,TextParser,7,29,0,2,2,8,0,3,0,2
+Phone Bill Project,edu.pdx.cs.joy.whitlock,PhoneCall,10,10,0,0,2,3,2,3,2,3
+Phone Bill Project,edu.pdx.cs.joy.whitlock,TextDumper,0,19,0,0,0,7,0,2,0,2
+Phone Bill Project,edu.pdx.cs.joy.whitlock,PhoneBill,10,9,0,0,2,4,2,2,2,2
+Phone Bill Project,edu.pdx.cs.joy.whitlock,Project1,5,27,0,2,2,5,2,2,2,1
