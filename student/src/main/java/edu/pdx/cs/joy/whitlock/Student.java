@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Student extends Human {
 
-  private double gpa;
+  private final double gpa;
 
   /**
    * Creates a new <code>Student</code>
@@ -26,7 +26,14 @@ public class Student extends Human {
    */
   public Student(String name, ArrayList<String> classes, double gpa, String gender) {
     super(name);
+    validateGPA(gpa);
     this.gpa = gpa;
+  }
+
+  private void validateGPA(double gpa) {
+    if (gpa < 0.0) {
+      throw new InvalidGPAException(gpa);
+    }
   }
 
   /**
@@ -71,7 +78,12 @@ public class Student extends Human {
   }
 
   public static class InvalidGPAException extends RuntimeException {
-    private double invalidGPA;
+    private final double invalidGPA;
+
+    public InvalidGPAException(double gpa) {
+      super(String.format("Invalid GPA: %f", gpa));
+      this.invalidGPA = gpa;
+    }
 
     public double getInvalidGPA() {
       return invalidGPA;
