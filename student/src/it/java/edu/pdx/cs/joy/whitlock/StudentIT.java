@@ -34,7 +34,7 @@ class StudentIT extends InvokeMainTestCase {
   void studentNameIsWrittenToStandardOut() {
     String name = "Student";
     InvokeMainTestCase.MainMethodResult result =
-      invokeMain(Student.class, name);
+      invokeMain(Student.class, name, "3.14");
     assertThat(result.getTextWrittenToStandardError(), equalTo(""));
     assertThat(result.getTextWrittenToStandardOut(), containsString(name));
   }
