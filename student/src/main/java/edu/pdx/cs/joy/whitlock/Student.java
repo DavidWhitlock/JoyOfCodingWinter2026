@@ -69,4 +69,13 @@ public class Student extends Human {
     Student student = new Student(name, new ArrayList<>(), gpa, "other");
     System.out.println(student);
   }
+
+  public static class InvalidGPAException extends RuntimeException {
+    private double invalidGPA;
+
+    public double getInvalidGPA() {
+      return invalidGPA;
+    }
+  }
+
 }

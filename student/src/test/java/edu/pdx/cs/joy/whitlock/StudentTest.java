@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the Student class.  In addition to the JUnit annotations,
@@ -59,4 +60,16 @@ public class StudentTest
     Student student = new Student("Any name", new ArrayList<>(), gpa, "Doesn't matter");
     assertThat(student.toString(), containsString(" has a GPA of " + gpa));
   }
+
+  @Test
+  void negativeGPAThrowsInvalidGPAException() {
+    double invalidGpa = -1.0;
+
+    Student.InvalidGPAException ex = assertThrows(Student.InvalidGPAException.class,
+      () -> new Student("Any name", new ArrayList<>(), invalidGpa, "Doesn't matter"));
+
+    assertThat(ex.getMessage(), containsString("Invalid GPA: " + invalidGpa));
+    assertThat(ex.getInvalidGPA(), equalTo(invalidGpa));
+  }
+
 }
