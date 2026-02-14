@@ -1,5 +1,6 @@
 package edu.pdx.cs.joy.whitlock;
 
+import edu.pdx.cs.joy.jdbc.H2DatabaseHelper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class PhoneBillDAOTest {
   @BeforeEach
   public void setUp() throws SQLException {
     // Create an in-memory H2 database
-    connection = DriverManager.getConnection("jdbc:h2:mem:phonebill_test");
+    connection = H2DatabaseHelper.createInMemoryConnection("phonebill_test");
 
     // Create the phone_bills table
     PhoneBillDAO.createTable(connection);
