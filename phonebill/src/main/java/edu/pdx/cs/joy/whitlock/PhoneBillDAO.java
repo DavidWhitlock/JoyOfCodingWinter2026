@@ -26,12 +26,22 @@ public class PhoneBillDAO {
   }
 
   /**
-   * Creates the customers table in the database.
+   * Creates the customers table in the database if it doesn't already exist.
    *
    * @param connection the database connection to use
    * @throws SQLException if a database error occurs
    */
   public static void createTable(Connection connection) throws SQLException {
+    // Check if the table already exists
+    DatabaseMetaData metaData = connection.getMetaData();
+    try (ResultSet tables = metaData.getTables(null, null, "CUSTOMERS", new String[]{"TABLE"})) {
+      if (tables.next()) {
+        // Table already exists, no need to create it
+        return;
+      }
+    }
+
+    // Table doesn't exist, create it
     String createTableSQL =
       "CREATE TABLE customers (" +
       "  name VARCHAR(255) PRIMARY KEY" +
