@@ -1,12 +1,13 @@
 package edu.pdx.cs.joy.whitlock;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs.joy.PhoneBillDumper;
 
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Map;
 
-public class PrettyPrinter {
+public class PrettyPrinter implements PhoneBillDumper<PhoneBill> {
   private final Writer writer;
 
   @VisibleForTesting
@@ -26,17 +27,16 @@ public class PrettyPrinter {
     this.writer = writer;
   }
 
-  public void dump(Map<String, String> dictionary) {
+  @Override
+  public void dump(PhoneBill phoneBill) {
     try (
       PrintWriter pw = new PrintWriter(this.writer)
     ) {
 
-      pw.println(formatWordCount(dictionary.size()));
+      pw.println(phoneBill.getCustomer());
 
-      for (Map.Entry<String, String> entry : dictionary.entrySet()) {
-        String word = entry.getKey();
-        String definition = entry.getValue();
-        pw.println(formatDictionaryEntry(word, definition));
+      for (PhoneCall call : phoneBill.getPhoneCalls()) {
+        pw.println("  " + call.getCaller());
       }
 
       pw.flush();

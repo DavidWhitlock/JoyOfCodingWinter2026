@@ -24,7 +24,7 @@ class Project5IT extends InvokeMainTestCase {
     private static final String PORT = System.getProperty("http.port", "8080");
 
     @Test
-    void test0RemoveAllMappings() throws IOException {
+    void test0RemoveAllPhoneBills() throws IOException {
       PhoneBillRestClient client = new PhoneBillRestClient(HOSTNAME, Integer.parseInt(PORT));
       client.removeAllPhoneBills();
     }
@@ -36,20 +36,10 @@ class Project5IT extends InvokeMainTestCase {
     }
 
     @Test
-    void test2EmptyServer() {
-        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT );
-
-        assertThat(result.getTextWrittenToStandardError(), equalTo(""));
-
-        String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatWordCount(0)));
-    }
-
-    @Test
-    void test3NoDefinitionsThrowsAppointmentBookRestException() {
-        String word = "WORD";
+    void test3UnknownCustomerThrowsAppointmentBookRestException() {
+        String customerName = "CUSTOMER";
         try {
-            invokeMain(Project5.class, HOSTNAME, PORT, word);
+            invokeMain(Project5.class, HOSTNAME, PORT, customerName);
             fail("Expected a RestException to be thrown");
 
         } catch (UncaughtExceptionInMain ex) {
@@ -59,29 +49,23 @@ class Project5IT extends InvokeMainTestCase {
     }
 
     @Test
-    void test4AddDefinition() {
-        String word = "WORD";
-        String definition = "DEFINITION";
+    void test4AddPhoneCall() {
+        String customerName = "CUSTOMER";
+        String callerNumber = "123-456-7890";
 
-        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT, word, definition );
+        MainMethodResult result = invokeMain( Project5.class, HOSTNAME, PORT, customerName, callerNumber );
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
         String out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(Messages.definedWordAs(word, definition)));
+        assertThat(out, out, containsString(Messages.definedWordAs(customerName, callerNumber)));
 
-        result = invokeMain( Project5.class, HOSTNAME, PORT, word );
-
-        assertThat(result.getTextWrittenToStandardError(), equalTo(""));
-
-        out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
-
-        result = invokeMain( Project5.class, HOSTNAME, PORT );
+        result = invokeMain( Project5.class, HOSTNAME, PORT, customerName );
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
         out = result.getTextWrittenToStandardOut();
-        assertThat(out, out, containsString(PrettyPrinter.formatDictionaryEntry(word, definition)));
+        assertThat(out, out, containsString(customerName));
+        assertThat(out, out, containsString(callerNumber));
     }
 }

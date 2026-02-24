@@ -18,8 +18,8 @@ public class Project5 {
     public static void main(String... args) {
         String hostName = null;
         String portString = null;
-        String word = null;
-        String definition = null;
+        String customerName = null;
+        String callerName = null;
 
         for (String arg : args) {
             if (hostName == null) {
@@ -28,11 +28,11 @@ public class Project5 {
             } else if ( portString == null) {
                 portString = arg;
 
-            } else if (word == null) {
-                word = arg;
+            } else if (customerName == null) {
+                customerName = arg;
 
-            } else if (definition == null) {
-                definition = arg;
+            } else if (callerName == null) {
+                callerName = arg;
 
             } else {
                 usage("Extraneous command line argument: " + arg);
@@ -59,23 +59,21 @@ public class Project5 {
 
         String message;
         try {
-            if (word == null) {
-                // Print all word/definition pairs
-                Map<String, String> dictionary = client.getAllDictionaryEntries();
+            if (customerName == null) {
+                throw new UnsupportedOperationException("Missing Customer");
+
+            } else if (callerName == null) {
+                // Print Phone Bill
+                PhoneBill phoneBill = client.getPhoneBill(customerName);
                 StringWriter sw = new StringWriter();
                 PrettyPrinter pretty = new PrettyPrinter(sw);
-                pretty.dump(dictionary);
+                pretty.dump(phoneBill);
                 message = sw.toString();
-
-            } else if (definition == null) {
-                // Print all dictionary entries
-                PhoneBill phoneBill = client.getPhoneBill(word);
-                throw new  UnsupportedOperationException("Not implemented yet");
 
             } else {
                 // Post the word/definition pair
-                client.addPhoneCall(word, new PhoneCall(definition));
-                message = Messages.definedWordAs(word, definition);
+                client.addPhoneCall(customerName, new PhoneCall(callerName));
+                message = Messages.definedWordAs(customerName, callerName);
             }
 
         } catch (IOException | ParserException ex ) {
