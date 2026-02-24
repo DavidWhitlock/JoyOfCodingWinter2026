@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class PhoneBillServletTest {
 
   @Test
-  void initiallyServletContainsNoPhoneBills() throws ServletException, IOException {
+  void customerNameIsRequiredParameter() throws ServletException, IOException {
     PhoneBillServlet servlet = new PhoneBillServlet();
 
     HttpServletRequest request = mock(HttpServletRequest.class);
@@ -34,7 +34,7 @@ class PhoneBillServletTest {
 
     // Nothing is written to the response's PrintWriter
     verify(pw, never()).println(anyString());
-    verify(response).setStatus(HttpServletResponse.SC_OK);
+    verify(response).sendError(eq(HttpServletResponse.SC_PRECONDITION_FAILED), anyString());
   }
 
   @Test
