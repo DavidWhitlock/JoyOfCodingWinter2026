@@ -1,6 +1,7 @@
 package edu.pdx.cs.joy.whitlock;
 
 import edu.pdx.cs.joy.ParserException;
+import edu.pdx.cs.joy.PhoneBillParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,38 +11,35 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TextParser {
+public class TextParser implements PhoneBillParser<PhoneBill> {
   private final Reader reader;
 
   public TextParser(Reader reader) {
     this.reader = reader;
   }
 
-  public Map<String, String> parse() throws ParserException {
-    Pattern pattern = Pattern.compile("(.*) : (.*)");
-
-    Map<String, String> map = new HashMap<>();
-
+  @Override
+  public PhoneBill parse() throws ParserException {
     try (
       BufferedReader br = new BufferedReader(this.reader)
     ) {
 
+      PhoneBill phoneBill = null;
       for (String line = br.readLine(); line != null; line = br.readLine()) {
-        Matcher matcher = pattern.matcher(line);
-        if (!matcher.find()) {
-          throw new ParserException("Unexpected text: " + line);
+        if (phoneBill == null) {
+          phoneBill = new PhoneBill(line);
+
+        } else {
+          String callerNumber = line.trim();
+          PhoneCall call = new PhoneCall(callerNumber);
+          phoneBill.addPhoneCall(call);
         }
-
-        String word = matcher.group(1);
-        String definition = matcher.group(2);
-
-        map.put(word, definition);
       }
 
-    } catch (IOException e) {
-      throw new ParserException("While parsing dictionary", e);
-    }
+      return phoneBill;
 
-    return map;
+    } catch (IOException e) {
+      throw new ParserException("While parsing PhoneBill", e);
+    }
   }
 }
