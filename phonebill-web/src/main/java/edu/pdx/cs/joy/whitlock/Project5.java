@@ -74,7 +74,7 @@ public class Project5 {
 
             } else {
                 // Post the word/definition pair
-                client.addDictionaryEntry(word, definition);
+                client.addPhoneCall(word, new PhoneCall(definition));
                 message = Messages.definedWordAs(word, definition);
             }
 

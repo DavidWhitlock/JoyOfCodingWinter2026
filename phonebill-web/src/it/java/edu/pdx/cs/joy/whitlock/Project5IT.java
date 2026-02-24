@@ -26,7 +26,7 @@ class Project5IT extends InvokeMainTestCase {
     @Test
     void test0RemoveAllMappings() throws IOException {
       PhoneBillRestClient client = new PhoneBillRestClient(HOSTNAME, Integer.parseInt(PORT));
-      client.removeAllDictionaryEntries();
+      client.removeAllPhoneBills();
     }
 
     @Test

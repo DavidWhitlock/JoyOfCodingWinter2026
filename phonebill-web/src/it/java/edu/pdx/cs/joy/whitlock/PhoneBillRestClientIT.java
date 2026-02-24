@@ -8,7 +8,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -29,37 +28,33 @@ class PhoneBillRestClientIT {
   }
 
   @Test
-  void test0RemoveAllDictionaryEntries() throws IOException {
+  void test0RemoveAllPhoneBills() throws IOException {
     PhoneBillRestClient client = newPhoneBillRestClient();
-    client.removeAllDictionaryEntries();
+    client.removeAllPhoneBills();
   }
 
   @Test
-  void test1EmptyServerContainsNoDictionaryEntries() throws IOException, ParserException {
+  void test2CreatePhoneCall() throws IOException, ParserException {
     PhoneBillRestClient client = newPhoneBillRestClient();
-    Map<String, String> dictionary = client.getAllDictionaryEntries();
-    assertThat(dictionary.size(), equalTo(0));
+    String customeName = "CUSTOMER";
+    String callerNumber = "123-456-7890";
+    PhoneCall phoneCall = new PhoneCall(callerNumber);
+    client.addPhoneCall(customeName, phoneCall);
+
+    PhoneBill phoneBill = client.getPhoneBill(customeName);
+    assertThat(phoneBill.getCustomer(), equalTo(customeName));
+    assertThat(phoneBill.getPhoneCalls().size(), equalTo(1));
+    assertThat(phoneBill.getPhoneCalls().iterator().next().getCaller(), equalTo(callerNumber));
   }
 
   @Test
-  void test2DefineOneWord() throws IOException, ParserException {
-    PhoneBillRestClient client = newPhoneBillRestClient();
-    String testWord = "TEST WORD";
-    String testDefinition = "TEST DEFINITION";
-    client.addDictionaryEntry(testWord, testDefinition);
-
-    PhoneBill definition = client.getPhoneBill(testWord);
-    assertThat(definition, equalTo(testDefinition));
-  }
-
-  @Test
-  void test4EmptyWordThrowsException() {
+  void test4EmptyCallerNumberThrowsException() {
     PhoneBillRestClient client = newPhoneBillRestClient();
     String emptyString = "";
 
-    RestException ex = assertThrows(RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
+    RestException ex = assertThrows(RestException.class, () -> client.addPhoneCall("CUSTOMER NAME", new PhoneCall(emptyString)));
     assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-    assertThat(ex.getMessage(), containsString(Messages.missingRequiredParameter(PhoneBillServlet.CUSTOMER_PARAMETER)));
+    assertThat(ex.getMessage(), containsString(Messages.missingRequiredParameter(PhoneBillServlet.CALLER_NUMBER_PARAMETER)));
   }
 
 }

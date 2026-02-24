@@ -88,7 +88,7 @@ public class PhoneBillServlet extends HttpServlet
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
 
-        log("DELETE all dictionary entries");
+        log("DELETE all PhoneBills");
 
         this.phoneBills.clear();
 

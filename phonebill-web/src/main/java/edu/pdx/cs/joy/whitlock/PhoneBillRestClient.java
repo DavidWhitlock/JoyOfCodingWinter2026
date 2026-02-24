@@ -64,12 +64,12 @@ public class PhoneBillRestClient {
     return parser.parse();
   }
 
-    public void addDictionaryEntry(String word, String definition) throws IOException {
-      Response response = http.post(Map.of(PhoneBillServlet.CUSTOMER_PARAMETER, word, PhoneBillServlet.CALLER_NUMBER_PARAMETER, definition));
+    public void addPhoneCall(String customerName, PhoneCall phoneCall) throws IOException {
+      Response response = http.post(Map.of(PhoneBillServlet.CUSTOMER_PARAMETER, customerName, PhoneBillServlet.CALLER_NUMBER_PARAMETER, phoneCall.getCaller()));
       throwExceptionIfNotOkayHttpStatus(response);
     }
 
-  public void removeAllDictionaryEntries() throws IOException {
+  public void removeAllPhoneBills() throws IOException {
       Response response = http.delete(Map.of());
       throwExceptionIfNotOkayHttpStatus(response);
     }
