@@ -69,7 +69,8 @@ public class Project5 {
 
             } else if (definition == null) {
                 // Print all dictionary entries
-                message = PrettyPrinter.formatDictionaryEntry(word, client.getDefinition(word));
+                PhoneBill phoneBill = client.getPhoneBill(word);
+                throw new  UnsupportedOperationException("Not implemented yet");
 
             } else {
                 // Post the word/definition pair

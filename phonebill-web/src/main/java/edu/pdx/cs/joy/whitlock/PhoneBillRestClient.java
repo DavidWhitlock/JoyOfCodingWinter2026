@@ -55,13 +55,13 @@ public class PhoneBillRestClient {
   /**
    * Returns the definition for the given word
    */
-  public String getDefinition(String word) throws IOException, ParserException {
-    Response response = http.get(Map.of(PhoneBillServlet.CUSTOMER_PARAMETER, word));
+  public PhoneBill getPhoneBill(String customerName) throws IOException, ParserException {
+    Response response = http.get(Map.of(PhoneBillServlet.CUSTOMER_PARAMETER, customerName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
     TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().getCustomer();
+    return parser.parse();
   }
 
     public void addDictionaryEntry(String word, String definition) throws IOException {

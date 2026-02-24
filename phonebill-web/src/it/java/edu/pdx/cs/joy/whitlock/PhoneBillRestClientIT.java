@@ -48,7 +48,7 @@ class PhoneBillRestClientIT {
     String testDefinition = "TEST DEFINITION";
     client.addDictionaryEntry(testWord, testDefinition);
 
-    String definition = client.getDefinition(testWord);
+    PhoneBill definition = client.getPhoneBill(testWord);
     assertThat(definition, equalTo(testDefinition));
   }
 
