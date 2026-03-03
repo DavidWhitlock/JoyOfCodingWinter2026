@@ -8,7 +8,6 @@ import edu.pdx.cs.joy.web.HttpRequestHelper.RestException;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -41,20 +40,6 @@ public class PhoneBillRestClient {
     this.http = http;
   }
 
-  /**
-   * Returns all dictionary entries from the server
-   */
-  public Map<String, String> getAllDictionaryEntries() throws IOException, ParserException {
-    Response response = http.get(Map.of());
-    throwExceptionIfNotOkayHttpStatus(response);
-
-    TextParser parser = new TextParser(new StringReader(response.getContent()));
-    throw new UnsupportedEncodingException("Not implemented");
-  }
-
-  /**
-   * Returns the definition for the given word
-   */
   public PhoneBill getPhoneBill(String customerName) throws IOException, ParserException {
     Response response = http.get(Map.of(PhoneBillServlet.CUSTOMER_PARAMETER, customerName));
     throwExceptionIfNotOkayHttpStatus(response);
