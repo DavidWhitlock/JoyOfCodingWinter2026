@@ -19,6 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final int GET_SUM = 42;
+    private ArrayAdapter<Integer> sums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        List<Integer> list = List.of(1, 2, 3, 4, 5);
-        ArrayAdapter<Integer> sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         ListView sumsListView = findViewById(R.id.sums);
         sumsListView.setAdapter(sums);
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == GET_SUM) {
             if (resultCode == RESULT_OK && data != null) {
                 int sum = data.getIntExtra(CalculatorActivity.SUM, 0);
-                Toast.makeText(this, "Sum is " + sum, Toast.LENGTH_SHORT).show();
+                this.sums.add(sum);
             }
         }
     }
