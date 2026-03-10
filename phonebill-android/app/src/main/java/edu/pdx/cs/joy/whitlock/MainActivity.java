@@ -3,6 +3,8 @@ package edu.pdx.cs.joy.whitlock;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -11,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        List<Integer> list = List.of(1, 2, 3, 4, 5);
+        ArrayAdapter<Integer> sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+
+        ListView sumsListView = findViewById(R.id.sums);
+        sumsListView.setAdapter(sums);
     }
 
     public void launchCalculator(View view) {
